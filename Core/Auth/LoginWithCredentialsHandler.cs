@@ -41,6 +41,11 @@ namespace Core.Auth
                 throw new ErrorsException("Email or password is wrong");
             }
 
+            if (!user.IsActive)
+            {
+                throw new ErrorsException("Your account is inactive. Please activate it via the link in your mailbox");
+            }
+
             var jwtToken = GenerateJWT(user);
             var response = new LoginResponse 
             { 

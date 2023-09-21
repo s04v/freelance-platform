@@ -19,6 +19,19 @@ namespace WebAPI.Controllers
             _mediator = mediator;
         }
 
+        [Authorize]
+        [HttpPut("Account")]
+        public async Task<ActionResult> Register(
+            [FromBody] UpdateAccountRequest request,
+            CancellationToken token)
+        {
+            request.UserUuid = this.GetUserId().Value;
+
+            await _mediator.Send(request, token);
+
+            return Ok();
+        }
+
         [HttpPost("Register")]
         public async Task<ActionResult> Register(
             [FromBody] RegisterUserRequest request,
