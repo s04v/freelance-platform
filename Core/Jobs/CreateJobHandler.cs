@@ -27,7 +27,6 @@ namespace Core.Jobs
                 Title = request.Title,
                 Description = request.Description,
                 Type = request.Type,
-                PaymentType = request.PaymentType,
                 Price = request.Price,
                 CandidateLevel = request.CandidateLevel,
                 PublicationDate = DateTime.Now,

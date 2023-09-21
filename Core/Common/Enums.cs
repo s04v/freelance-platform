@@ -7,12 +7,6 @@ using System.Threading.Tasks;
 
 namespace Core.Common
 {
-    public enum JobPaymentType : byte
-    {
-        FixedPrice,
-        HourlyRate
-    }
-
     public enum JobType : byte
     {
         OnTime,

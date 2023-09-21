@@ -25,7 +25,6 @@ namespace Core.Jobs.Applications
                     .ForMember(o => o.Title, opt => opt.MapFrom(o => o.Job.Title))
                     .ForMember(o => o.Description, opt => opt.MapFrom(o => o.Job.Description))
                     .ForMember(o => o.Type, opt => opt.MapFrom(o => o.Job.Type))
-                    .ForMember(o => o.PaymentType, opt => opt.MapFrom(o => o.Job.PaymentType))
                     .ForMember(o => o.Price, opt => opt.MapFrom(o => o.Job.Price))
                     .ForMember(o => o.CandidateLevel, opt => opt.MapFrom(o => o.Job.CandidateLevel))
                     .ForMember(o => o.PublicationDate, opt => opt.MapFrom(o => o.Job.PublicationDate))
