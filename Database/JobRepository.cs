@@ -1,6 +1,7 @@
 ﻿using Core.Common;
 using Core.Jobs;
 using Core.Jobs.Applications;
+using Core.Jobs.Attachment;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -95,6 +96,26 @@ namespace Database
 
             var res = await  q.ToListAsync(token);
             return res;        
+        }
+
+        public async Task AddJobAttachment(JobAttachment attachment, CancellationToken token)
+        {
+            await _dbContext.JobAttachment.AddAsync(attachment, token);
+        }
+
+        public async Task<IEnumerable<JobAttachment>> GetJobAttachmentByJobUuid(Guid jobUuid, CancellationToken token)
+        {
+            return await _dbContext.JobAttachment
+                .AsNoTracking()
+                .Where(o => o.JobUuid == jobUuid)
+                .ToListAsync();
+        }
+
+        public async Task<JobAttachment?> GetJobAttachmentByUuid(Guid uuid, CancellationToken token)
+        {
+            return await _dbContext.JobAttachment
+                .Where(o => o.Uuid == uuid)
+                .FirstOrDefaultAsync(token);
         }
 
 

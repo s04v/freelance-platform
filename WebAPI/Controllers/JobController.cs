@@ -1,5 +1,6 @@
 ﻿using Core.Jobs;
 using Core.Jobs.Applications;
+using Core.Jobs.Attachment;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -70,7 +71,9 @@ namespace WebAPI.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] CreateJobRequest request, CancellationToken token)
+        public async Task<ActionResult> Create(
+            [FromForm] CreateJobRequest request, 
+            CancellationToken token)
         {
             request.UserUuid = this.GetUserId().Value;
             

@@ -1,5 +1,6 @@
 ﻿using Core.Jobs;
 using Core.Jobs.Applications;
+using Core.Jobs.Attachment;
 using Core.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -20,6 +21,7 @@ namespace Database
         public DbSet<User> User { get; set; }
         public DbSet<Job> Job { get; set; }
         public DbSet<JobApplication> JobApplication { get; set; }
+        public DbSet<JobAttachment> JobAttachment { get; set; }
 
         public BaseDbContext(DbContextOptions<BaseDbContext> options) : base(options)
         {
@@ -47,17 +49,25 @@ namespace Database
                 .HasForeignKey(o => o.JobUuid)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Job>()
+                .HasMany(o => o.Attachments)
+                .WithOne(o => o.Job)
+                .HasForeignKey(o => o.JobUuid)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<JobApplication>()
                 .HasOne(o => o.User)
                 .WithMany()
                 .HasForeignKey(o => o.UserUuid)
                 .OnDelete(DeleteBehavior.Restrict);
-                
 
             modelBuilder.Entity<JobApplication>()
                 .ToTable("job_application")
                 .HasKey(o => o.Uuid);
+
+            modelBuilder.Entity<JobAttachment>()
+            .ToTable("job_attachment")
+            .HasKey(o => o.Uuid);
 
             MapColumnName(modelBuilder);
             SetDecimalType(modelBuilder);

@@ -17,11 +17,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetValue<string>("ConnectionString");
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddHttpContextAccessor();
 
 // Add Services
 builder.Services.AddSingleton<IMailSender, MailSender>();
 builder.Services.AddSingleton<IMailService, MailService>();
+builder.Services.AddScoped<IFileStorage, LocalFileStorage>();
 
 // Add Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -72,12 +76,19 @@ builder.Services.AddCors(options =>
         {
             policy.AllowAnyOrigin()
                 .AllowAnyHeader()
-                .AllowAnyMethod();
+                .AllowAnyMethod()
+                .WithExposedHeaders("*");
         });
 });
 
 var app = builder.Build();
 
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 // Configure the HTTP request pipeline.
 
 app.UseCors("AllowAllOrigins");

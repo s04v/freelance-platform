@@ -1,5 +1,6 @@
 ﻿using Core.Common;
 using Core.Jobs.Applications;
+using Core.Jobs.Attachment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,6 @@ namespace Core.Jobs
         public ProposalsRange ProposalsRange { get; set; }
         public ClientInfo ClientInfo { get; set; }
         public IEnumerable<JobApplicationResponse>? Applications { get; set; }
+        public IEnumerable<JobAttachment>? Attachments { get; set; }
     }
 }

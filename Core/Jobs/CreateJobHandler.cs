@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Core.Jobs.Attachment;
+using Core.Services;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +12,12 @@ namespace Core.Jobs
     public class CreateJobHandler : IRequestHandler<CreateJobRequest, Unit>
     {
         private readonly IJobRepository _jobRepository;
+        private readonly IFileStorage _fileStorage;
 
-        public CreateJobHandler(IJobRepository jobRepository)
+        public CreateJobHandler(IJobRepository jobRepository, IFileStorage fileStorage)
         {
             _jobRepository = jobRepository;
+            _fileStorage = fileStorage;
         }
 
         public async Task<Unit> Handle(CreateJobRequest request, CancellationToken token)
@@ -32,6 +36,22 @@ namespace Core.Jobs
             };
 
             await _jobRepository.Add(job, token);
+
+            foreach (var attachment in request.Attachments)
+            {
+                var jobAttachment = new JobAttachment
+                {
+                    Uuid = Guid.NewGuid(),
+                    FileName = attachment.FileName,
+                    JobUuid = job.Uuid,
+                    ContentType = attachment.ContentType,
+                };
+
+                await _jobRepository.AddJobAttachment(jobAttachment, token);
+
+                await _fileStorage.SaveFile(attachment, jobAttachment.Uuid.ToString("N"));
+            }
+
             await _jobRepository.Save(token);
 
             return Unit.Value;

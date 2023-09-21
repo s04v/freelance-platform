@@ -54,9 +54,12 @@ namespace Core.Jobs
             {
                 var applications = await _repository.GetApplications(job.Uuid, token);
 
-                
                 jobResponse.Applications = _mapper.Map<List<JobApplicationResponse>>(applications);
             }
+
+            var attachments = await _repository.GetJobAttachmentByJobUuid(job.Uuid, token);
+
+            jobResponse.Attachments = attachments;
 
             return jobResponse;
         }

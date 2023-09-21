@@ -1,5 +1,7 @@
 ﻿using Core.Common;
 using Core.Jobs.Applications;
+using Core.Jobs.Attachment;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +25,6 @@ namespace Core.Jobs
         public int? Proposals { get; set; }
 
         public IEnumerable<JobApplication> Applications { get; set; } = new List<JobApplication>();
+        public IEnumerable<JobAttachment> Attachments { get; set; } = new List<JobAttachment>();
     }
 }

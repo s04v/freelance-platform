@@ -1,4 +1,5 @@
 ﻿using Core.Jobs.Applications;
+using Core.Jobs.Attachment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,10 @@ namespace Core.Jobs
         Task<IEnumerable<JobApplication>> GetMyApplicationsWithJobs(Guid userUuid, CancellationToken token);
         Task<JobApplication?> GetApplication(Expression<Func<JobApplication, bool>> predicate, CancellationToken token);
         Task<IEnumerable<JobApplication?>> GetApplications(Guid jobUuid, CancellationToken token);
+        Task AddJobAttachment(JobAttachment attachment, CancellationToken token);
+        Task<IEnumerable<JobAttachment>> GetJobAttachmentByJobUuid(Guid jobUuid, CancellationToken token);
+        Task<JobAttachment?> GetJobAttachmentByUuid(Guid uuid, CancellationToken token);
+        
         void Remove<T>(T entity) where T : class;
         Task Save(CancellationToken token);
     }
