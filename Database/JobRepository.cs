@@ -35,6 +35,7 @@ namespace Database
         public async Task<IEnumerable<Job>> GetJobsPage(int pageNumber, int pageSize, CancellationToken token)
         {
             return await _dbContext.Job
+                .OrderByDescending(o => o.PublicationDate)
                 .Skip(pageNumber * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
