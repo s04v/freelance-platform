@@ -24,11 +24,7 @@ namespace Core.Auth
         {
             User? user = null; 
 
-            if (request.UserUuid.HasValue)
-            {
-                user = await _userRepository.GetUser(o => o.Uuid == request.UserUuid, token);
-            }
-            else if (!string.IsNullOrEmpty(request.RecoveryToken)) 
+            if (!string.IsNullOrEmpty(request.RecoveryToken)) 
             {
                 user = await _userRepository.GetUser(o => o.RecoveryToken == request.RecoveryToken, token);
             }

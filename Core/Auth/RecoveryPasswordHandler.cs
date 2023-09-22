@@ -32,6 +32,10 @@ namespace Core.Auth
 
             var recoveryToken = Guid.NewGuid().ToString("N");
 
+            user.RecoveryToken = recoveryToken;
+
+            await _userRepository.Save(token);
+
             await _mailService.SendRecoveryPassword(request.Email, recoveryToken, token);
 
             return Unit.Value;

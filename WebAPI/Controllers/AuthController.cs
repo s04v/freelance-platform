@@ -66,5 +66,25 @@ namespace WebAPI.Controllers
 
             return Ok();
         }
+
+        [HttpPost("RecoveryPassword")]
+        public async Task<ActionResult> RecoveryPassword(
+            [FromBody] RecoveryPasswordRequest request,
+            CancellationToken token)
+        {
+            var response = await _mediator.Send(request, token);
+
+            return Ok(response);
+        }
+
+        [HttpPut("RecoveryPassword")]
+        public async Task<ActionResult> ChangePassword(
+            [FromBody] ChangePasswordRequest request,
+            CancellationToken token)
+        {
+            var response = await _mediator.Send(request, token);
+
+            return Ok(response);
+        }
     }
 }
