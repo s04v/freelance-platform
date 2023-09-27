@@ -1,3 +1,4 @@
+using Core.Chat;
 using Core.Common.Behaviors;
 using Core.Jobs;
 using Core.Services;
@@ -7,11 +8,14 @@ using Database.Users;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
 using WebAPI.Filters;
+using WebAPI.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,13 +34,25 @@ builder.Services.AddScoped<IFileStorage, LocalFileStorage>();
 // Add Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJobRepository, JobRepository>();
+builder.Services.AddScoped<IChatRepository, ChatRepository>();
 
 // Add Mediatr
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
+
+builder.Services.AddHealthChecks();
+
+
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    
+}).AddJwtBearer(o =>
 {
     o.RequireHttpsMetadata = false;
     o.TokenValidationParameters = new TokenValidationParameters
@@ -48,6 +64,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateAudience = false,
         ValidateLifetime = false,
         ValidateIssuerSigningKey = false
+    };
+    
+    o.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var accessToken = context.Request.Query["access_token"];
+            var path = context.HttpContext.Request.Path;
+
+            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chat"))
+            {
+                context.Token = accessToken;
+            }
+
+            return Task.CompletedTask;
+        },
     };
 });
 
@@ -67,18 +99,32 @@ builder.Services.AddDbContext<BaseDbContext>(opt =>
         .UseSqlServer(connectionString);
 });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy(JwtBearerDefaults.AuthenticationScheme, policy =>
+    {
+        policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
+        policy.RequireClaim("id");
+    });
+});
 
-builder.Services.AddCors(options =>
+/*builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins",
         policy =>
         {
-            policy.AllowAnyOrigin()
+            policy.AllowAnyOrigin("http://localhost:4200")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .WithExposedHeaders("*");
         });
+});
+*/
+builder.Services.AddSignalR().AddHubOptions<ChatHub>(opt =>
+{
+    opt.EnableDetailedErrors = true;
+    opt.ClientTimeoutInterval = TimeSpan.FromMinutes(30);
+    opt.HandshakeTimeout = TimeSpan.FromSeconds(30);
 });
 
 var app = builder.Build();
@@ -91,13 +137,30 @@ if (app.Environment.IsDevelopment())
 }
 // Configure the HTTP request pipeline.
 
-app.UseCors("AllowAllOrigins");
+app.UseRouting();
+
+/*app.UseCors("AllowAllOrigins");*/
 
 app.UseHttpsRedirection();
+
+app.UseCors(builder =>
+{
+    builder.WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+});
 
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ChatHub>("/chat");
+});
 
 app.MapControllers();
 

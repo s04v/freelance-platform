@@ -1,4 +1,5 @@
-﻿using Core.Jobs;
+﻿using Core.Chat;
+using Core.Jobs;
 using Core.Jobs.Applications;
 using Core.Jobs.Attachment;
 using Core.Users;
@@ -22,6 +23,8 @@ namespace Database
         public DbSet<Job> Job { get; set; }
         public DbSet<JobApplication> JobApplication { get; set; }
         public DbSet<JobAttachment> JobAttachment { get; set; }
+        public DbSet<Message> ChatMessage { get; set; }
+        public DbSet<Conversation> Conversation { get; set; }
 
         public BaseDbContext(DbContextOptions<BaseDbContext> options) : base(options)
         {
@@ -66,8 +69,21 @@ namespace Database
                 .HasKey(o => o.Uuid);
 
             modelBuilder.Entity<JobAttachment>()
-            .ToTable("job_attachment")
-            .HasKey(o => o.Uuid);
+                .ToTable("job_attachment")
+                .HasKey(o => o.Uuid);
+
+            modelBuilder.Entity<Message>()
+                .ToTable("chat_message")
+                .HasKey(o => o.Uuid);
+
+            modelBuilder.Entity<Conversation>()
+                .ToTable("conversation")
+                .HasKey(o => o.Uuid);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(o => o.Conversation)
+                .WithMany(o => o.Messages)
+                .HasForeignKey(o => o.ConversationUuid);
 
             MapColumnName(modelBuilder);
             SetDecimalType(modelBuilder);
