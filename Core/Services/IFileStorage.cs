@@ -10,6 +10,7 @@ namespace Core.Services
     public interface IFileStorage
     {
         Task SaveFile(IFormFile file, string fileName);
+        Task SavePhoto(IFormFile file, string fileName);
         Task<FileStream> GetFile(string fileName);
     }
 }

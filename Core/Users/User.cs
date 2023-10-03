@@ -18,5 +18,6 @@ namespace Core.Users
         public string? ActivateToken { get; set; }
         public string? RecoveryToken { get; set; }
         public bool IsActive { get; set; }
+        public string? Photo { get; set; }
     }
 }

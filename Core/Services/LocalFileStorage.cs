@@ -47,5 +47,20 @@ namespace Core.Services
             }
 
         }
+
+        public async Task SavePhoto(IFormFile file, string fileName)
+        {
+            var path = Path.Combine(_rootPath, "photo", fileName);
+
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
+            using (var fileStream = new FileStream(path, FileMode.CreateNew))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+        }
     }
 }

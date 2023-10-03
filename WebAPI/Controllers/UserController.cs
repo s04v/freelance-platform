@@ -39,5 +39,16 @@ namespace WebAPI.Controllers
 
             return Ok();
         }
+
+        [Authorize]
+        [HttpPost("Me/Photo")]
+        public async Task<IActionResult> UpdatePhoto([FromForm] UpdateUserPhotoRequest request, CancellationToken token)
+        {
+            request.UserUuid = this.GetUserId().Value;
+
+            await _mediator.Send(request, token);
+
+            return Ok();
+        }
     }
 }
