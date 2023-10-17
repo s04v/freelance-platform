@@ -67,6 +67,21 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
+        [HttpGet("ConfirmEmail/{activateToken}")]
+        public async Task<ActionResult> ConfirmEmail(
+            [FromRoute] string activateToken,
+            CancellationToken token)
+        {
+            var request = new EmailChangeConfirmRequest
+            {
+                ActivateToken = activateToken
+            };
+
+            await _mediator.Send(request, token);
+
+            return Ok();
+        }
+
         [HttpPost("RecoveryPassword")]
         public async Task<ActionResult> RecoveryPassword(
             [FromBody] RecoveryPasswordRequest request,

@@ -26,6 +26,17 @@ namespace Core.Services
             await _mailSender.SendToOne(email, subject, body, true, new CancellationToken());
         }
 
+        public async Task SendEmailChangeConfirm(string email, string activateToken)
+        {
+            string link = $"http://localhost:7076/api/Auth/ConfirmEmail/{activateToken}";
+
+            string subject = "Confirming email changes";
+            string body = $"To confirm the email change, please click on the following link: <br /><br />" +
+                       $"{link}";
+
+            await _mailSender.SendToOne(email, subject, body, true, new CancellationToken());
+        }
+
         public async Task SendRecoveryPassword(string email, string recoveryToken, CancellationToken token)
         {
             string link = $"http://localhost:7076/api/Auth/RecoveryPassword/{recoveryToken}";

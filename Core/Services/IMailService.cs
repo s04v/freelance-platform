@@ -10,6 +10,7 @@ namespace Core.Services
     public interface IMailService
     {
         Task SendUserProfileActivate(string email, string activateToken);
+        Task SendEmailChangeConfirm(string email, string activateToken);
         Task SendRecoveryPassword(string email, string recoveryToken, CancellationToken token);
     }
 }
