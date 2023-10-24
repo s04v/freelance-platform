@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Chat
 {
-    public class GetConversationRequest : IRequest<Conversation>
+    public class GetConversationRequest : IRequest<ConversationResponse>
     {
         public Guid UserUuid { get; set; }
         public Guid InterlocutorUuid { get; set; }

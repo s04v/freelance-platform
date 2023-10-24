@@ -15,15 +15,15 @@ namespace WebAPI.Controllers
     public class ChatController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IChatRepository _repo;
-        public ChatController(IMediator mediator, IChatRepository repo)
+        private readonly IChatRepository _repository;
+        public ChatController(IMediator mediator, IChatRepository repository)
         {
             _mediator = mediator;
-            _repo = repo;
+            _repository = repository;
         }
 
         [HttpGet("{id}")]
-        public async Task<Conversation> GetConversation(
+        public async Task<ConversationResponse> GetConversation(
             [FromRoute] Guid id,
             CancellationToken token)
         {
@@ -41,7 +41,7 @@ namespace WebAPI.Controllers
         public async Task<IEnumerable<ConversationItem>> GetConversations(CancellationToken token)
         {
 
-            return await _repo.GetMyConversations(this.GetUserId().Value, token);
+            return await _repository.GetMyConversations(this.GetUserId().Value, token);
         }
     }
 }
