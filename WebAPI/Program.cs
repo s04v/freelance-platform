@@ -1,6 +1,7 @@
 using Core.Chat;
 using Core.Common.Behaviors;
 using Core.Jobs;
+using Core.Orders;
 using Core.Services;
 using Core.Users;
 using Database;
@@ -36,6 +37,7 @@ builder.Services.AddScoped<IFileStorage, LocalFileStorage>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 // Add Mediatr
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));

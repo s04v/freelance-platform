@@ -2,6 +2,7 @@
 using Core.Jobs;
 using Core.Jobs.Applications;
 using Core.Jobs.Attachment;
+using Core.Orders;
 using Core.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -25,6 +26,7 @@ namespace Database
         public DbSet<JobAttachment> JobAttachment { get; set; }
         public DbSet<Message> ChatMessage { get; set; }
         public DbSet<Conversation> Conversation { get; set; }
+        public DbSet<Order> Order { get; set; }
 
         public BaseDbContext(DbContextOptions<BaseDbContext> options) : base(options)
         {
@@ -84,6 +86,10 @@ namespace Database
                 .HasOne(o => o.Conversation)
                 .WithMany(o => o.Messages)
                 .HasForeignKey(o => o.ConversationUuid);
+
+            modelBuilder.Entity<Order>()
+              .ToTable("order")
+              .HasKey(o => o.Uuid);
 
             MapColumnName(modelBuilder);
             SetDecimalType(modelBuilder);
