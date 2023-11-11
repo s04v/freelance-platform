@@ -50,5 +50,17 @@ namespace WebAPI.Controllers
 
             return Ok();
         }
+
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUser([FromRoute] Guid id, CancellationToken token)
+        {
+            var request = new GetUserRequest
+            {
+                Uuid = id,
+            };
+
+            return Ok(await _mediator.Send(request, token));
+        }
     }
 }
