@@ -112,6 +112,34 @@ namespace WebAPI.Controllers
         }
 
         [Authorize]
+        [HttpPost("Application/{id}/Negotiate")]
+        public async Task<IActionResult> StartApplicationNegotiation([FromRoute] Guid id, CancellationToken token)
+        {
+            var request = new StartNegotiationRequest
+            {
+                UserUuid = this.GetUserId().Value,
+                ApplicationUuid = id
+            };
+
+            await _mediator.Send(request, token);
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("Application/{id}/Reject")]
+        public async Task<IActionResult> RejectApplication([FromRoute] Guid id, CancellationToken token)
+        {
+            var request = new RejectApplicationRequest
+            {
+                ApplicationUuid = id,
+                UserUuid = this.GetUserId().Value,
+            };
+
+            await _mediator.Send(request, token);
+            return Ok();
+        }
+
+        [Authorize]
         [HttpGet("Applied")]
         public async Task<IEnumerable<MyApplicationWithJob>> GetMyApplications(CancellationToken token)
         {

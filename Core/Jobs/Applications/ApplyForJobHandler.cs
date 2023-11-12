@@ -34,6 +34,7 @@ namespace Core.Jobs.Applications
                 JobUuid = request.JobUuid,
                 Message = request.Message,
                 ApplicationDate = DateTime.Now,
+                Status = ApplicationStatus.New,
             };
 
             job.Proposals++;

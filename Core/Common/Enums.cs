@@ -26,4 +26,12 @@ namespace Core.Common
         From10To15,
         More15,
     }
+
+    public enum ApplicationStatus : byte
+    {
+        New, 
+        Negotiation,
+        Rejected,
+        Accepted
+    }
 }
