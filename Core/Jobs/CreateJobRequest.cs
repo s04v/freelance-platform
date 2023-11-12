@@ -16,7 +16,7 @@ namespace Core.Jobs
         public JobType Type { get; set; }
         public decimal Price { get; set;  }
         public CandidateLevel CandidateLevel { get; set; }
-        public IFormFile[] Attachments { get; set; }
+        public IFormFile[]? Attachments { get; set; }
         public Guid UserUuid { get; set; }
     }
 }

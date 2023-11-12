@@ -35,20 +35,24 @@ namespace Core.Jobs
             };
 
             await _jobRepository.Add(job, token);
-
-            foreach (var attachment in request.Attachments)
+            
+            if (request.Attachments != null)
             {
-                var jobAttachment = new JobAttachment
+
+                foreach (var attachment in request.Attachments)
                 {
-                    Uuid = Guid.NewGuid(),
-                    FileName = attachment.FileName,
-                    JobUuid = job.Uuid,
-                    ContentType = attachment.ContentType,
-                };
+                    var jobAttachment = new JobAttachment
+                    {
+                        Uuid = Guid.NewGuid(),
+                        FileName = attachment.FileName,
+                        JobUuid = job.Uuid,
+                        ContentType = attachment.ContentType,
+                    };
 
-                await _jobRepository.AddJobAttachment(jobAttachment, token);
+                    await _jobRepository.AddJobAttachment(jobAttachment, token);
 
-                await _fileStorage.SaveFile(attachment, jobAttachment.Uuid.ToString("N"));
+                    await _fileStorage.SaveFile(attachment, jobAttachment.Uuid.ToString("N"));
+                }
             }
 
             await _jobRepository.Save(token);

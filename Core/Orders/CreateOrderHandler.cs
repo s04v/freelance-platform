@@ -26,6 +26,7 @@ namespace Core.Orders
                 CustomerUuid = request.CustomerUuid,
                 PerformerUuid = request.PerformerUuid,
                 Status = OrderStatus.New,
+                CreatedDate = DateTime.Now,
             };
 
             await _repository.Create(order, token);

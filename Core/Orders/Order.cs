@@ -15,5 +15,6 @@ namespace Core.Orders
         public Guid CustomerUuid { get; set; }
         public Guid PerformerUuid { get; set; }
         public OrderStatus Status { get; set; }
+        public DateTime CreatedDate { get; set; } 
     }
 }

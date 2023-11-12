@@ -21,9 +21,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async void Create([FromBody] CreateOrderRequest request, CancellationToken token)
+        public async Task Create([FromBody] CreateOrderRequest request, CancellationToken token)
         {
-            request.CustomerUuid = this.GetUserId().Value;
+            request.PerformerUuid = this.GetUserId().Value;
 
             await _mediator.Send(request, token);
         }
