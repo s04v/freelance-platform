@@ -27,5 +27,41 @@ namespace WebAPI.Controllers
 
             await _mediator.Send(request, token);
         }
+
+        [HttpGet("{id}")]
+        public async Task GetOrder([FromRoute] Guid id, CancellationToken token)
+        {
+            var request = new GetOrderRequest
+            {
+                OrderUuid = id,
+                UserUuid = this.GetUserId().Value,
+            };
+
+            await _mediator.Send(request, token);
+        }
+
+        [HttpGet("Customer")]
+        public async Task GetOrdersForCustomer(CancellationToken token)
+        {
+            var request = new GetOrdersForCustomerRequest
+            {
+                UserUuid = this.GetUserId().Value,
+            };
+
+            await _mediator.Send(request, token);
+        }
+
+
+        [HttpGet("Performer")]
+        public async Task GetOrdersForPerformer(CancellationToken token)
+        {
+            var request = new GetOrdersForCustomerRequest
+            {
+                UserUuid = this.GetUserId().Value,
+            };
+
+            await _mediator.Send(request, token);
+        }
+
     }
 }

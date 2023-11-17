@@ -11,5 +11,8 @@ namespace Core.Orders
     {
         Task Create(Order order, CancellationToken token);
         Task Save(CancellationToken token);
+        Task<Order> GetOrderByUuid(Guid uuid, CancellationToken token);
+        Task<IEnumerable<Order>> GetOrdersByCustomerUuid(Guid uuid, CancellationToken token);
+        Task<IEnumerable<Order>> GetOrdersByPerformerUuid(Guid uuid, CancellationToken token);
     }
 }

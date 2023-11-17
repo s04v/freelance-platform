@@ -1,5 +1,6 @@
 ﻿using Core.Jobs;
 using Core.Orders;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,25 @@ namespace Database
         public async Task Save(CancellationToken token)
         {
             await _dbContext.SaveChangesAsync(token);
+        }
+
+        public async Task<Order> GetOrderByUuid(Guid uuid, CancellationToken token)
+        {
+            return await _dbContext.Order
+                .Where(o => o.Uuid == uuid)
+                .FirstAsync(token);
+        }
+        public async Task<IEnumerable<Order>> GetOrdersByCustomerUuid(Guid uuid, CancellationToken token)
+        {
+            return await _dbContext.Order
+                .Where(o => o.CustomerUuid == uuid)
+                .ToListAsync(token);
+        }
+        public async Task<IEnumerable<Order>> GetOrdersByPerformerUuid(Guid uuid, CancellationToken token) 
+        {
+            return await _dbContext.Order
+                .Where(o => o.PerformerUuid == uuid)
+                .ToListAsync(token);
         }
     }
 }
