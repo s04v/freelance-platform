@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task GetOrder([FromRoute] Guid id, CancellationToken token)
+        public async Task<Order> GetOrder([FromRoute] Guid id, CancellationToken token)
         {
             var request = new GetOrderRequest
             {
@@ -37,30 +37,30 @@ namespace WebAPI.Controllers
                 UserUuid = this.GetUserId().Value,
             };
 
-            await _mediator.Send(request, token);
+            return await _mediator.Send(request, token);
         }
 
         [HttpGet("Customer")]
-        public async Task GetOrdersForCustomer(CancellationToken token)
+        public async Task<IEnumerable<Order>> GetOrdersForCustomer(CancellationToken token)
         {
             var request = new GetOrdersForCustomerRequest
             {
                 UserUuid = this.GetUserId().Value,
             };
 
-            await _mediator.Send(request, token);
+            return await _mediator.Send(request, token);
         }
 
 
         [HttpGet("Performer")]
-        public async Task GetOrdersForPerformer(CancellationToken token)
+        public async Task<IEnumerable<Order>> GetOrdersForPerformer(CancellationToken token)
         {
-            var request = new GetOrdersForCustomerRequest
+            var request = new GetOrdersForPerformerRequest
             {
                 UserUuid = this.GetUserId().Value,
             };
 
-            await _mediator.Send(request, token);
+            return await _mediator.Send(request, token);
         }
 
     }

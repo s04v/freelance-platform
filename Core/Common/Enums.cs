@@ -34,4 +34,12 @@ namespace Core.Common
         Rejected,
         Accepted
     }
+
+    public enum OrderStatus : byte
+    {
+        New,
+        Delivered,
+        InRevision,
+        Accepted
+    }
 }
