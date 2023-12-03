@@ -1,4 +1,5 @@
 ﻿using Core.Common;
+using Core.Users.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using System;

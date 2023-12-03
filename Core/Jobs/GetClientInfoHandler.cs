@@ -1,4 +1,6 @@
 ﻿using Core.Common;
+using Core.Jobs.Entities;
+using Core.Jobs.Requests;
 using Core.Users;
 using MediatR;
 using System;

@@ -1,4 +1,4 @@
-﻿using Core.Auth;
+﻿using Core.Auth.Requests;
 using Core.Users;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

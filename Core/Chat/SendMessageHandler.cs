@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Core.Chat.Entities;
+using Core.Chat.Requests;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;

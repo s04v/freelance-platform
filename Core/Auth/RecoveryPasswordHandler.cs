@@ -1,4 +1,5 @@
-﻿using Core.Common;
+﻿using Core.Auth.Requests;
+using Core.Common;
 using Core.Services;
 using Core.Users;
 using MediatR;

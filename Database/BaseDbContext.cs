@@ -1,9 +1,9 @@
-﻿using Core.Chat;
-using Core.Jobs;
-using Core.Jobs.Applications;
+﻿using Core.Chat.Entities;
+using Core.Jobs.Applications.Entities;
 using Core.Jobs.Attachment;
-using Core.Orders;
-using Core.Users;
+using Core.Jobs.Entities;
+using Core.Orders.Entities;
+using Core.Users.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

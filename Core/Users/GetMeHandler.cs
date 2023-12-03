@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Core.Users.Entities;
+using Core.Users.Requests;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;

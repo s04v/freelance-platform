@@ -1,7 +1,8 @@
 ﻿using Core.Common;
 using Core.Jobs;
-using Core.Jobs.Applications;
+using Core.Jobs.Applications.Entities;
 using Core.Jobs.Attachment;
+using Core.Jobs.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

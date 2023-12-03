@@ -1,4 +1,6 @@
 ﻿using Core.Orders;
+using Core.Orders.Entities;
+using Core.Orders.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Core.Common;
+using Core.Users.Entities;
+using Core.Users.Requests;
 using MediatR;
 using System;
 using System.Collections.Generic;

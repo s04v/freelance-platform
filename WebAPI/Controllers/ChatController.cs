@@ -1,4 +1,6 @@
 ﻿using Core.Chat;
+using Core.Chat.Entities;
+using Core.Chat.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Core.Common;
-using Core.Jobs.Applications;
-using Core.Users;
+using Core.Jobs.Applications.Entities;
+using Core.Jobs.Applications.Responses;
+using Core.Jobs.Entities;
+using Core.Jobs.Requests;
+using Core.Users.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;

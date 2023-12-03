@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.Chat;
+using Core.Chat.Entities;
 using Core.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;

@@ -1,4 +1,5 @@
 ﻿using Core.Chat;
+using Core.Chat.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

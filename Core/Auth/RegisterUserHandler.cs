@@ -1,5 +1,7 @@
-﻿using Core.Services;
+﻿using Core.Auth.Requests;
+using Core.Services;
 using Core.Users;
+using Core.Users.Entities;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;

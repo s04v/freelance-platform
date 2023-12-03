@@ -1,4 +1,6 @@
 ﻿using Core.Jobs.Attachment;
+using Core.Jobs.Entities;
+using Core.Jobs.Requests;
 using Core.Services;
 using MediatR;
 using System;

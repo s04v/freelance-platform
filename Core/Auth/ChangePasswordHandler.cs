@@ -1,5 +1,7 @@
-﻿using Core.Common;
+﻿using Core.Auth.Requests;
+using Core.Common;
 using Core.Users;
+using Core.Users.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;

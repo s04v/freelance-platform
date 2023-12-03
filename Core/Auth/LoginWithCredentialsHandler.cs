@@ -1,5 +1,8 @@
-﻿using Core.Common;
+﻿using Core.Auth.Requests;
+using Core.Auth.Responses;
+using Core.Common;
 using Core.Users;
+using Core.Users.Entities;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Chat.Requests;
 using Core.Common;
 using Core.Users;
 using MediatR;

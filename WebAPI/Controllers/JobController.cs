@@ -1,6 +1,11 @@
-﻿using Core.Jobs;
-using Core.Jobs.Applications;
+﻿using Core.Jobs.Applications;
+using Core.Jobs.Applications.Entities;
+using Core.Jobs.Applications.Requests;
+using Core.Jobs.Applications.Responses;
 using Core.Jobs.Attachment;
+using Core.Jobs.Entities;
+using Core.Jobs.Requests;
+using Core.Jobs.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

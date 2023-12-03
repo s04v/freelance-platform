@@ -1,4 +1,5 @@
 ﻿using Core.Common;
+using Core.Jobs.Applications.Requests;
 using MediatR;
 using System;
 using System.Collections.Generic;

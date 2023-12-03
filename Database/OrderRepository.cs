@@ -1,5 +1,6 @@
 ﻿using Core.Jobs;
 using Core.Orders;
+using Core.Orders.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
