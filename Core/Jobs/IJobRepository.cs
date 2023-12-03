@@ -28,7 +28,8 @@ namespace Core.Jobs
         Task AddJobAttachment(JobAttachment attachment, CancellationToken token);
         Task<IEnumerable<JobAttachment>> GetJobAttachmentByJobUuid(Guid jobUuid, CancellationToken token);
         Task<JobAttachment?> GetJobAttachmentByUuid(Guid uuid, CancellationToken token);
-        
+        Task<int> GetApplicationCountOfUser(Guid uuid, CancellationToken token);
+        Task<int> GetJobCountOfUser(Guid uuid, CancellationToken token);
         void Remove<T>(T entity) where T : class;
         Task Save(CancellationToken token);
     }

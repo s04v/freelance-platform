@@ -1,4 +1,5 @@
-﻿using Core.Users.Requests;
+﻿using Core.Users.Entities;
+using Core.Users.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,18 @@ namespace WebAPI.Controllers
             await _mediator.Send(request, token);
 
             return Ok();
+        }
+
+        [Authorize]
+        [HttpGet("Me/Statistics")]
+        public async Task<UserStatistics> GetUserStatistics(CancellationToken token)
+        {
+            var request = new GetUserStatisticsRequest
+            {
+                UserUuid = this.GetUserId().Value,
+            };
+
+            return await _mediator.Send(request, token);
         }
 
         [Authorize]

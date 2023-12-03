@@ -120,12 +120,24 @@ namespace Database
                 .FirstOrDefaultAsync(token);
         }
 
+        public async Task<int> GetApplicationCountOfUser(Guid uuid, CancellationToken token)
+        {
+            return await _dbContext.Job
+                .Where(o => o.AuthorUuid == uuid)
+                .CountAsync(token);
+        }
+
+        public async Task<int> GetJobCountOfUser(Guid uuid, CancellationToken token)
+        {
+            return await _dbContext.JobApplication
+                .Where(o => o.UserUuid == uuid)
+                .CountAsync(token);
+        }
 
         public void Remove<T>(T entity) where T : class
         {
             _dbContext.Remove(entity);
         }
-
 
         public async Task Save(CancellationToken token)
         {
