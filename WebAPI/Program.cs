@@ -21,6 +21,10 @@ using WebAPI.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration
+    .AddJsonFile("appsettings.json")
+    .AddJsonFile("secrets.json");
+
 var connectionString = builder.Configuration.GetValue<string>("ConnectionString");
 
 builder.Services.AddEndpointsApiExplorer();
