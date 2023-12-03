@@ -42,6 +42,30 @@ namespace WebAPI.Controllers
             return await _mediator.Send(request, token);
         }
 
+        [HttpPost("{id}/Accept")]
+        public async Task AcceptOrder([FromRoute] Guid id, CancellationToken token)
+        {
+            var request = new AcceptOrderRequest
+            {
+                OrderUuid = id,
+                UserUuid = this.GetUserId().Value,
+            };
+
+            await _mediator.Send(request, token);
+        }
+
+        [HttpPost("{id}/Delivery")]
+        public async Task DeliveryOrder([FromRoute] Guid id, CancellationToken token)
+        {
+            var request = new DeliveryOrderRequest
+            {
+                OrderUuid = id,
+                UserUuid = this.GetUserId().Value
+            };
+
+            await _mediator.Send(request, token);
+        }
+
         [HttpGet("Customer")]
         public async Task<IEnumerable<Order>> GetOrdersForCustomer(CancellationToken token)
         {

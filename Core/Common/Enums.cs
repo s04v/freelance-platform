@@ -38,8 +38,7 @@ namespace Core.Common
     public enum OrderStatus : byte
     {
         New,
+        Accepted,
         Delivered,
-        InRevision,
-        Accepted
     }
 }
