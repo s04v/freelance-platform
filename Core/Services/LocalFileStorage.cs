@@ -19,7 +19,7 @@ namespace Core.Services
             _rootPath = config.GetValue<string>("FileStorage:LocalRootPath");
 
         }
-        public async Task<FileStream?> GetFile(string fileName)
+        public async Task<Stream?> GetFile(string fileName)
         {
             var path = Path.Combine(_rootPath, fileName);
             FileStream stream = null;

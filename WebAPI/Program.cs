@@ -11,6 +11,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -35,7 +36,6 @@ builder.Services.AddHttpContextAccessor();
 // Add Services
 builder.Services.AddSingleton<IMailSender, MailSender>();
 builder.Services.AddSingleton<IMailService, MailService>();
-builder.Services.AddScoped<IFileStorage, LocalFileStorage>();
 
 // Add Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -51,7 +51,20 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.
 
 builder.Services.AddHealthChecks();
 
+if (builder.Environment.IsProduction())
+{
+    builder.Services.AddAzureClients(clientBuilder =>
+    {
+        clientBuilder.AddBlobServiceClient(builder.Configuration["Azure:BlobStorage:ConnectionString"]);
+    });
 
+    builder.Services.AddScoped<IFileStorage, AzureFileStorage>();
+
+} 
+else
+{
+    builder.Services.AddScoped<IFileStorage, LocalFileStorage>();
+}
 
 builder.Services.AddAuthentication(options =>
 {

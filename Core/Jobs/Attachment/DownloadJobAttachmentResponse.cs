@@ -10,6 +10,6 @@ namespace Core.Jobs.Attachment
     {
         public string FileName { get; set; }
         public string ContentType { get; set; }
-        public FileStream FileContent { get; set; }
+        public Stream FileContent { get; set; }
     }
 }

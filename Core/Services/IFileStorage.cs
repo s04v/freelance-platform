@@ -11,6 +11,6 @@ namespace Core.Services
     {
         Task SaveFile(IFormFile file, string fileName);
         Task SavePhoto(IFormFile file, string fileName);
-        Task<FileStream> GetFile(string fileName);
+        Task<Stream> GetFile(string fileName);
     }
 }
