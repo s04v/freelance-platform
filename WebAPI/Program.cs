@@ -15,6 +15,8 @@ using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Serilog.Formatting.Compact;
 using System.Text;
 using System.Text.Json.Serialization;
 using WebAPI.Filters;
@@ -22,6 +24,8 @@ using WebAPI.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host
+    .UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
 builder.Configuration
     .AddJsonFile("appsettings.json")
     .AddJsonFile("secrets.json");
@@ -113,10 +117,18 @@ builder.Services.AddControllers(opt =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
+Log.Logger = new LoggerConfiguration()
+       .MinimumLevel.Debug()
+       .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Information)
+       .Enrich.FromLogContext()
+       .WriteTo.Console(new RenderedCompactJsonFormatter())
+       .CreateLogger();
+
 builder.Services.AddDbContext<BaseDbContext>(opt =>
 {
     opt
-        .UseSqlServer(connectionString);
+        .UseSqlServer(connectionString)
+        .LogTo(Log.Logger.Information, LogLevel.Information, null);
 });
 
 builder.Services.AddAuthorization(opt =>
@@ -163,8 +175,9 @@ if (app.Environment.IsDevelopment())
         RequestPath = "/Static/Avatar"
     });
 }
-// Configure the HTTP request pipeline.
+app.UseSerilogRequestLogging();
 
+// Configure the HTTP request pipeline.
 app.UseRouting();
 
 /*app.UseCors("AllowAllOrigins");*/
